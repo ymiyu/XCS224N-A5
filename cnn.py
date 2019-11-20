@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+CS224N 2018-19: Homework 5
+"""
 
-### YOUR CODE HERE for part 1e
-
+### YOUR CODE HERE for part 1i
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -48,4 +50,3 @@ class CNN(nn.Module):
         return torch.squeeze(X_conv_out, -1)
 
 ### END YOUR CODE
-

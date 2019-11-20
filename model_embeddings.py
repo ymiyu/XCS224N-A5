@@ -1,19 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+CS224N 2018-19: Homework 5
+model_embeddings.py: Embeddings for the NMT model
+Pencheng Yin <pcyin@cs.cmu.edu>
+Sahil Chopra <schopra8@stanford.edu>
+Anand Dhoot <anandd@stanford.edu>
+Michael Hahn <mhahn2@stanford.edu>
+"""
 
 import torch.nn as nn
 import torch
 
-
 # Do not change these imports; your module names should be
 #   `CNN` in the file `cnn.py`
 #   `Highway` in the file `highway.py`
-# Uncomment the following two imports once you're ready to run part 1(f)
+# Uncomment the following two imports once you're ready to run part 1(j)
 
 from cnn import CNN
 from highway import Highway
 
-# End "do not change" 
+# End "do not change"
+
 
 class ModelEmbeddings(nn.Module):
     """
@@ -33,7 +41,14 @@ class ModelEmbeddings(nn.Module):
         # self.embeddings = nn.Embedding(len(vocab.src), embed_size, padding_idx=pad_token_idx)
         ## End A4 code
 
-        ### YOUR CODE HERE for part 1f
+        ### YOUR CODE HERE for part 1j
+
+        # there is two problems
+        # 1. Now that embed_size is for output,
+        # so why A4 code take embed_size as param for self.embeddings?
+        # remember we take e_{char} = 50
+        # 2. VocabEntry object doesn't own the attribute 'src'
+
 
         pad_token_idx = vocab.char2id['<pad>']
         self.embed_size = embed_size
@@ -47,7 +62,7 @@ class ModelEmbeddings(nn.Module):
 
         ### END YOUR CODE
 
-    def forward(self, input):
+    def forward(self, input: torch.Tensor) -> torch.Tensor:
         """
         Looks up character-based CNN embeddings for the words in a batch of sentences.
         @param input: Tensor of integers of shape (sentence_length, batch_size, max_word_length) where
@@ -61,8 +76,8 @@ class ModelEmbeddings(nn.Module):
         # return output
         ## End A4 code
 
-        ### YOUR CODE HERE for part 1f
-
+        ### YOUR CODE HERE for part 1j
+        
         X_word_emb_list = []
         # divide input into sentence_length batchs
         for X_padded in input:

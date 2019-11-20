@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+CS224N 2018-19: Homework 5
+nmt.py: NMT Model
+Pencheng Yin <pcyin@cs.cmu.edu>
+Sahil Chopra <schopra8@stanford.edu>
+"""
+
 import math
 from typing import List
 
@@ -20,20 +27,20 @@ def pad_sents_char(sents, char_pad_token):
         number of characters
         Output shape: (batch_size, max_sentence_length, max_word_length)
     """
-    # Words longer than 21 characters should be truncated
-    max_word_length = 21 
+    # Words longer than 21 should be truncated
+    # Q: how truncate, why truncate, is that reasonable?
+    max_word_length = 21
 
-    ### YOUR CODE HERE for part 1b
+    ### YOUR CODE HERE for part 1f
     ### TODO:
-    ###     Perform necessary padding to the sentences in the batch similar to the pad_sents() 
-    ###     method below using the padding character from the arguments. You should ensure all 
-    ###     sentences have the same number of words and each word has the same number of 
-    ###     characters. 
-    ###     Set padding words to a `max_word_length` sized vector of padding characters.  
+    ###     Perform necessary padding to the sentences in the batch similar to the pad_sents()
+    ###     method below using the padding character from the arguments. You should ensure all
+    ###     sentences have the same number of words and each word has the same number of
+    ###     characters.
+    ###     Set padding words to a `max_word_length` sized vector of padding characters.
     ###
-    ###     You should NOT use the method `pad_sents()` below because of the way it handles 
+    ###     You should NOT use the method `pad_sents()` below because of the way it handles
     ###     padding and unknown words.
-
     max_sent_length = max(len(sent) for sent in sents)
     word_padded = [char_pad_token] * max_word_length
     sents_padded = []
@@ -48,8 +55,6 @@ def pad_sents_char(sents, char_pad_token):
                                     (max_word_length - len(word)))
         sents_padded.append(words_padded + [word_padded] *
                             (max_sent_length - len(words_padded)))
-
-
     ### END YOUR CODE
 
     return sents_padded
@@ -117,4 +122,3 @@ def batch_iter(data, batch_size, shuffle=False):
         tgt_sents = [e[1] for e in examples]
 
         yield src_sents, tgt_sents
-
